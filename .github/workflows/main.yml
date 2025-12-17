@@ -1,0 +1,23 @@
+name: Deploy to Somee FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files to Somee
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Somee yêu cầu file nằm trong thư mục web cụ thể
+          # Bạn có thể thử bỏ trống hoặc điền /www.letrungkien.somee.com
+          server-dir: /www.letrungkien.somee.com/
